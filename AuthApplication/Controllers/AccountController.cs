@@ -49,13 +49,11 @@ namespace AuthApplication.Controllers
             return View(userModel);
         }
 
-        [Route("login")]
         public IActionResult Login()
         {
             return View();
         }
 
-        [Route("login")]
         [HttpPost]
         public async Task<IActionResult> Login(SignInModel signInModel, string returnUrl)
         {
