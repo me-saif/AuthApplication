@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -15,17 +16,19 @@ namespace AuthApplication.AuthClass
         [Display(Name = "Last name")]
         public string LastName { get; set; }
 
+        [Remote(action: "IsEmailInUse", controller: "Account")]
         [Required(ErrorMessage = "Please enter your email")]
         [Display(Name = "Email address")]
         [EmailAddress(ErrorMessage = "Please enter a valid email")]
         public string Email { get; set; }
 
         [Required(ErrorMessage = "Please enter a strong password")]
-        [Compare("ConfirmPassword", ErrorMessage = "Password does not match")]
+        //[Compare("ConfirmPassword", ErrorMessage = "Password does not match")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
+        [Remote(action: "IsMatchConfirmPassword", controller: "Account")]
         [Required(ErrorMessage = "Please confirm your password")]
         [Display(Name = "Confirm Password")]
         [DataType(DataType.Password)]

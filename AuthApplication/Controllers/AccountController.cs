@@ -49,6 +49,37 @@ namespace AuthApplication.Controllers
             return View(userModel);
         }
 
+        [AcceptVerbs("Get", "Post")]
+        [AllowAnonymous]
+        public async Task<IActionResult> IsEmailInUse(string email)
+        {
+            var user = await _accountRepository.GetUserByEmailAsync(email);
+
+            if (user == null)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Email {email} is already in use.");
+            }
+        }
+
+        public async Task<IActionResult> IsMatchConfirmPassword(SignUpUserModel model)
+        {
+            var password = model.Password;
+            var confirmPassword = model.ConfirmPassword;
+
+            if (password == confirmPassword)
+            {
+                return Json(true);
+            }
+            else
+            {
+                return Json($"Confirm Password is not match to Password.");
+            }
+        }
+
         public IActionResult Login()
         {
             return View();
